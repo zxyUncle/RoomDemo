@@ -1,11 +1,11 @@
 package com.zxy.zxyroom.dao
 
-import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.zxy.zxyroom.empty.StudentBean
 import com.zxy.zxyroom.empty.TearchBean
+import com.zxy.zxyroom.tools.Applications
 
 /**
  * Created by zxy on 2020/9/15 20:10
@@ -13,6 +13,7 @@ import com.zxy.zxyroom.empty.TearchBean
  * *
  * ******************************************
  */
+var roomDao:AppDataBase = AppDataBase.instance()
 
 @Database(entities = [StudentBean::class, TearchBean::class], version = 1)
 abstract class AppDataBase : RoomDatabase() {
@@ -24,14 +25,14 @@ abstract class AppDataBase : RoomDatabase() {
     companion object {
         var dbName = "User.db"
         @Volatile
-        private var instance: AppDataBase? = null
+        private lateinit var appDataBase: AppDataBase
 
-        fun instance(mContext: Context): AppDataBase {
-            if (instance == null) {
+        fun instance(): AppDataBase {
+            if (!::appDataBase.isInitialized) {
                 synchronized(AppDataBase::class.java) {
-                    if (instance == null) {
-                        instance = Room.databaseBuilder(
-                            mContext,
+                    if (!::appDataBase.isInitialized) {
+                        appDataBase = Room.databaseBuilder(
+                            Applications.context(),
                             AppDataBase::class.java,
                             dbName
                         )
@@ -40,7 +41,7 @@ abstract class AppDataBase : RoomDatabase() {
                     }
                 }
             }
-            return instance!!
+            return appDataBase
         }
     }
 

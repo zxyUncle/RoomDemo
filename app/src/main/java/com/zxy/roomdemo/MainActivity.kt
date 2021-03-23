@@ -1,11 +1,12 @@
 package com.zxy.roomdemo
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.zxy.zxyroom.dao.AppDataBase
+import androidx.appcompat.app.AppCompatActivity
+import com.zxy.zxyroom.dao.roomDao
 import com.zxy.zxyroom.empty.StudentBean
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 /**
  * Created by zxy on 2020/9/11 17:56
@@ -16,10 +17,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private val studentDao by lazy {
-        AppDataBase.instance(this).studentDao()
+        roomDao.studentDao()
     }
     private val tearcherDao by lazy {
-        AppDataBase.instance(this).teacherDao()
+        roomDao.teacherDao()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
