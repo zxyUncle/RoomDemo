@@ -3,6 +3,8 @@ package com.zxy.zxyroom.dao
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.zxy.zxyroom.empty.StudentBean
 import com.zxy.zxyroom.empty.TearchBean
 import com.zxy.zxyroom.tools.Applications
@@ -13,7 +15,7 @@ import com.zxy.zxyroom.tools.Applications
  * *
  * ******************************************
  */
-var roomDao:AppDataBase = AppDataBase.instance()
+var roomDao: AppDataBase = AppDataBase.instance()
 
 @Database(entities = [StudentBean::class, TearchBean::class], version = 1)
 abstract class AppDataBase : RoomDatabase() {
@@ -24,6 +26,7 @@ abstract class AppDataBase : RoomDatabase() {
 
     companion object {
         var dbName = "User.db"
+
         @Volatile
         private lateinit var appDataBase: AppDataBase
 
@@ -35,8 +38,12 @@ abstract class AppDataBase : RoomDatabase() {
                             Applications.context(),
                             AppDataBase::class.java,
                             dbName
-                        )
-                            .allowMainThreadQueries()
+                        ).addMigrations(object : Migration(1, 1) {
+                            override fun migrate(database: SupportSQLiteDatabase) {
+//                                database.execSQL("ALTER TABLE user ADD age INTEGER Default 0 not null ")
+                            }
+
+                        }).allowMainThreadQueries()
                             .build()
                     }
                 }
