@@ -13,15 +13,18 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "Student")
 data class StudentBean(
-    @PrimaryKey(autoGenerate = true)//主键
-    @ColumnInfo(name = "s_id")
-    var id: Long? = null,
     @ColumnInfo(name = "s_studentId")
     var studentId: Long? = null,
     @ColumnInfo(name = "s_studentName")
     var studentName: String? = null,
     @ColumnInfo(name = "s_studentType")
     var studentType: String? = null,
+
     @Ignore  //忽略这个字段
-    var aaaa:String?=null
-)
+    var aaaa: String? = null,
+    @PrimaryKey(autoGenerate = true)//主键
+    @ColumnInfo(name = "s_id")
+    var id: Long? = null
+) {
+
+}

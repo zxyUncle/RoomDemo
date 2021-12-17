@@ -3,9 +3,12 @@ package com.zxy.roomdemo
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.zxy.zxyroom.dao.roomDao
+import com.zxy.zxyroom.database.commonDataBase
 import com.zxy.zxyroom.empty.StudentBean
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.concurrent.Flow
 
 
 /**
@@ -17,10 +20,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private val studentDao by lazy {
-        roomDao.studentDao()
+        commonDataBase.studentDao()
     }
     private val tearcherDao by lazy {
-        roomDao.teacherDao()
+        commonDataBase.teacherDao()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,12 +36,18 @@ class MainActivity : AppCompatActivity() {
             selectAll()
         }
         btnDeleteAll.setOnClickListener {
-            val deleteAll = studentDao.deleteAll()
-            Log.e("zxy", deleteAll.toString())
+            GlobalScope.launch {
+                val deleteAll = studentDao.deleteAll()
+                Log.e("zxy", deleteAll.toString())
+            }
         }
         btnUpdate.setOnClickListener {
-            val update = studentDao.update(StudentBean(1, "s1", "大学"))
-            Log.e("zxy", update.toString())
+            GlobalScope.launch {
+                var student=StudentBean(1, "s1", "小学")
+                student.id=30
+                val update = studentDao.update(student)
+                Log.e("zxy", update.toString())
+            }
         }
     }
 
@@ -52,14 +61,18 @@ class MainActivity : AppCompatActivity() {
         sList.add(StudentBean(6, "s6", "大学"))
 
         //可以直接把list传进去，也可以一个一个单独添加
-        val insertList = studentDao.insertList(sList)
-        Log.e("zxy", insertList.size.toString())
+        GlobalScope.launch {
+            val insertList = studentDao.insertList(sList)
+            Log.e("zxy", insertList.size.toString())
+        }
     }
 
     private fun selectAll() {
-        var queryAll: MutableList<StudentBean> = studentDao.queryAll()
-        for (i in queryAll.indices) {
-            Log.e("zxy", queryAll[i].toString())
+        GlobalScope.launch {
+            var queryAll: MutableList<StudentBean> = studentDao.queryAll()
+            for (i in queryAll.indices) {
+                Log.e("zxy", queryAll[i].toString())
+            }
         }
     }
 }

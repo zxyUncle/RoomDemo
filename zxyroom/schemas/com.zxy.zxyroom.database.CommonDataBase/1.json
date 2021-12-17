@@ -6,8 +6,14 @@
     "entities": [
       {
         "tableName": "Student",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`s_studentId` INTEGER, `s_studentName` TEXT, `s_studentType` TEXT, `s_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`s_id` INTEGER PRIMARY KEY AUTOINCREMENT, `s_studentId` INTEGER, `s_studentName` TEXT, `s_studentType` TEXT)",
         "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "s_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
           {
             "fieldPath": "studentId",
             "columnName": "s_studentId",
@@ -24,12 +30,6 @@
             "fieldPath": "studentType",
             "columnName": "s_studentType",
             "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "id",
-            "columnName": "s_id",
-            "affinity": "INTEGER",
             "notNull": false
           }
         ],
