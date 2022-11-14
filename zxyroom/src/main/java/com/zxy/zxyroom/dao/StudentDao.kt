@@ -18,7 +18,10 @@ interface StudentDao: BaseDao<StudentBean> {
     fun queryAll(): MutableList<StudentBean>
 
     @Query("select * from Student where s_studentId = :studentID")
-    fun queryId(studentID: Int): StudentBean
+    fun queryId(studentID: Int?): StudentBean
+
+    @Query("select * from Student where s_studentName = :studentName")
+    fun queryName(studentName: String?): StudentBean
 
     @Query("select * from Student order by s_studentId desc ")
     fun queryOrderByDesc(): MutableList<StudentBean>

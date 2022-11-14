@@ -34,7 +34,7 @@ object DBCommon {
                         }
 
                     })
-//                      .allowMainThreadQueries()//支持主线程访问数据库
+                      .allowMainThreadQueries()//支持主线程访问数据库
                         .build()
                 }
             }
