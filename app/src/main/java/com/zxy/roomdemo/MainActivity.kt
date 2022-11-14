@@ -3,12 +3,11 @@ package com.zxy.roomdemo
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.zxy.zxyroom.database.commonDataBase
 import com.zxy.zxyroom.empty.StudentBean
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.concurrent.Flow
 
 
 /**
@@ -36,13 +35,13 @@ class MainActivity : AppCompatActivity() {
             selectAll()
         }
         btnDeleteAll.setOnClickListener {
-            GlobalScope.launch {
+            lifecycleScope.launch {
                 val deleteAll = studentDao.deleteAll()
                 Log.e("zxy", deleteAll.toString())
             }
         }
         btnUpdate.setOnClickListener {
-            GlobalScope.launch {
+            lifecycleScope.launch {
                 var student=StudentBean(1, "s1", "小学")
                 student.id=30
                 val update = studentDao.update(student)
@@ -61,14 +60,14 @@ class MainActivity : AppCompatActivity() {
         sList.add(StudentBean(6, "s6", "大学"))
 
         //可以直接把list传进去，也可以一个一个单独添加
-        GlobalScope.launch {
+        lifecycleScope.launch {
             val insertList = studentDao.insertList(sList)
             Log.e("zxy", insertList.size.toString())
         }
     }
 
     private fun selectAll() {
-        GlobalScope.launch {
+        lifecycleScope.launch {
             var queryAll: MutableList<StudentBean> = studentDao.queryAll()
             for (i in queryAll.indices) {
                 Log.e("zxy", queryAll[i].toString())

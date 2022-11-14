@@ -34,4 +34,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation project(path: ':zxyroom')
+
+
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
 }
